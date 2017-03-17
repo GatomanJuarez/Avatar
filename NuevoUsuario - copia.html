@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Registro</title>
+    <link href="css/bootstrap.css" rel="stylesheet"> <!--Estilos Bootstrap-->
+    <script src="js/jquery-3.1.1.min.js"></script> <!--Libreria de JQuery-->
+    <style> /*Estilo Global de la Página*/
+        label{
+            font-family: "Segoe UI";
+        }
+        .label{
+            display: none;
+        }
+    </style>
+    
+    <script> //Script de la Página (Requiere de JQuery)
+        
+        $(function(){ //Función anónima (Cuando se termina de cargar la página, adjunta las funciones)
+            
+            var EnviarU = "no";
+            
+            //Al presionar el botón de registrar
+            $("#Registrar").on("click", function(){
+                //Revisa cada elemento tipo <input> y <select>
+                $("input, select").each(function(){
+                    //Aquiere el valor de cada caja
+                    var cajaActual = $(this);
+                    //Revisa su contenido
+                    revisarLaCajaPorFavor(cajaActual);
+                });
+                
+                /*
+                if(EnviarU == "no"){
+                    $(Form).action="php/insertusers.php";
+                }
+                else{
+                    $(Form).action="";
+                }
+                */
+                
+            });
+            
+            $("input, select").on("focus",function(){ //Al dar clic en los elementos
+                //Desaparece la etiqueta de adverterncia
+               $(this).parents(".form-group").find(".label").fadeOut(); 
+                
+                //Al momento de deseleccionar el elemento
+            }).on("blur",function(){
+                //Adquiere el valor del input/select actual
+                var cajaActual = $(this);
+                //Llama la función para revisar contenido de caja
+                revisarLaCajaPorFavor(cajaActual);
+            });
+            
+            
+        });
+            
+            function revisarLaCajaPorFavor($caja){
+                if ($caja.val().length == 0){ //Si la caja se encuentra vacía               
+                    $caja.parents(".form-group").find(".label").fadeIn();
+                    //$EnviarU = "no";
+                }
+                else if ($caja.val() == "none"){ //Rol = "-Seleccionar"
+                    $caja.parents(".form-group").find(".label").fadeIn();
+                    //$EnviarU = "no";
+                }
+                else{
+                    //$EnviarU = "si";
+                }
+            
+            }
+        
+    </script>
+    
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+           <!--Envía información discreta al archivo/programa "insertusers.php" dentro de la carpeta "php"-->
+            <form method="post" action="php/insertusers.php"
+                   enctype="multipart/form-data">
+                   <!--"encripted type" Permite subir archivos binarios-->
+                
+                <div class="form-group">
+                    <label for="usuario">Nombre del Usuario</label>
+                    <input type="text" name="usuario" class="form-control">
+                    <span class="label label-danger">* El campo es requerido</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña del Usuario</label>
+                    <input type="password" name="password" class="form-control">
+                    <span class="label label-danger">* El campo es requerido</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="rol">Tipo de Usuario</label>                    
+                    <select name="rol" class="form-control">
+                        <option value="none">--Seleccionar</option>
+                        <option value="admin">Administrador</option>
+                        <option value="tester">Tester</option>
+                        <option value="designer">Diseñador</option>
+                        <option value="standard">Estándar</option>
+                    </select>
+                    <span class="label label-danger">* El campo es requerido</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label">Avatar</label>
+                    <input type="file" id="avatar" name="avatar" class="form-control">
+                    <p class="help-block">Imágen de Perfil</p>
+                </div>
+                
+                <input type="submit" value="Registrar" id="Registrar" class="btn btn-success"> 
+            </form>
+        </div>
+    </div>
+    
+    
+</body>
+</html>

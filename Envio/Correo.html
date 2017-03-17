@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Correo</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/jquery.easing.min.js"></script>
+    
+    <script>
+        // $ = JQuery
+        var posicion = "arriba";
+        $(function(){ //Función anónima
+          //Cuando se termina de cargar la página, adjunta las funciones
+            $("#mostrar").on("click", function(){
+                $("section").fadeIn();
+            });
+            
+            $("#ocultar").on("click", function(){
+                $("section").fadeOut();    
+            });
+            
+            $("#enviar").on("click", function(){
+                $("input, textarea").each(function(){
+                    var cajaActual = $(this);//.val();
+                    revisarLaCajaPorFavor(cajaActual);
+                });
+                
+            });
+            
+            $("input, textarea").on("focus",function(){
+               $(this).parents(".form-group").find(".label").fadeOut();
+            }).on("blur",function(){
+                var cajaActual = $(this);
+                revisarLaCajaPorFavor(cajaActual);
+            });
+            
+            $("img").on("click",function(){
+                if(posicion=="arriba"){
+               $("#mail-container").animate({"top":"0px"},{duration:2000,
+                                                easing:"easeOutBounce"}); 
+                    $("#Modal").fadeIn();
+                    posicion = "abajo";
+                }
+                else{
+                    $("#mail-container").animate({"top":"-360px"},{duration:2000,
+                                                        easing:"easeInBounce"}); 
+                    $("#Modal").fadeOut();
+                    posicion = "arriba";
+                }
+            });
+            
+        });
+            
+            function revisarLaCajaPorFavor($caja){
+                if ($caja.val().length == 0){                
+                    $caja.parents(".form-group").find(".label").fadeIn();
+                    //$caja.css("background-color", "red");
+                }
+            
+            }
+        
+    </script>
+</head>
+<body>
+  <h2>Tengo que decir algo con respecto a los alumnos de 4°B</h2>
+  <h4>Los alumnos del 4° Cuatrimestre, del grupo B, de la carrera de ingeniería en software, de la Universidad Politécnica de Durango, no estudiaron para su examen de programación web porque se quedaron viendo Dragon Ball Super.</h4>
+  <section id="Modal"></section>
+   <section class="col-md-6 cl-sm-12 col-xs-12" id="mail-container">
+        <div class="form-group">
+            <label>Nombre</label>            
+            
+            <div class="input-group">
+                <span class="input-group-addon">
+                <i class="glyphicon glyphicon-user"></i>
+                </span>
+                <input type="text" id="nombre" name="nombre" class="form-control">
+            </div>
+            <span class="label label-danger">* El campo es requerido</span>
+        </div>
+        
+        
+        
+        <div class="form-group">
+            <label>E-Mail</label>
+            
+            <div class="input-group">
+                <span class="input-group-addon">
+                <i class="glyphicon glyphicon-envelope"></i>
+                </span>
+                <input type="email" id="email" name="email" class="form-control">
+            </div>
+            <span class="label label-danger">* El campo es requerido</span>
+        </div>
+        
+        
+        
+        <div class="form-group">
+            <label>Asunto</label>            
+            
+            <div class="input-group">
+                <span class="input-group-addon">
+                <i class="glyphicon glyphicon-pencil"></i>
+                </span>
+                <input type="text" id="asunto" name="asunto" class="form-control">
+            </div>
+            <span class="label label-danger">* El campo es requerido</span>
+        </div>
+        
+        
+        
+        <div class="form-group">
+            <label>Texto</label>
+            <textarea id="texto" name="texto" class="form-control"></textarea>
+            <span class="label label-danger">* El campo es requerido</span>
+        </div>
+        
+        <button id="enviar" class="btn btn-success">
+            <i class="glyphicon glyphicon-ok"></i> Envíar
+        </button>
+        
+        <img src="Recursos Correo/email.png" alt="correo">
+    </section>
+    
+    
+    
+
+</body>
+</html>
